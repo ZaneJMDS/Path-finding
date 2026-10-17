@@ -7,6 +7,7 @@ File name   :   Main.cpp
 
 #include "FileInterface.h"
 
+
 // Clear console text
 void ClearText()
 {
@@ -37,7 +38,7 @@ int main()
 {
 	int action = 0;
 	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE); // Colour text for the console
-	FileInterface File;
+	FileInterface File; // Get the map
 
 	// Menu
 	while (action != 10)

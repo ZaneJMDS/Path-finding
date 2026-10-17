@@ -96,7 +96,6 @@ bool FileInterface::LoadGraph()
 				start_tiles++;
 			}
 
-			// Items
 			if (level_array[x][y] >= 'a' && level_array[x][y] <= 'j')
 			{
 				items++;
