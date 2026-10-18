@@ -6,12 +6,12 @@ File name   :   Main.cpp
 **************************************************************************/
 
 #include "FileInterface.h"
-
+#include "AdjacencyMatrix.h"
 
 // Clear console text
 void ClearText()
 {
-	std::cout << "\x1b[2J\x1b[3J"; // Evil command that clears console text
+	std::cout << "\x1b[2J\x1b[3J"; // Clear
 	std::cout << "\x1b[H"; // Moves text back to top left alligned
 }
 
@@ -61,7 +61,9 @@ int main()
 		{
 			if (File.LoadGraph())
 			{
+				// Display the graph to the user
 				std::cout << File.PrintGraph();
+				std::cout << "\n\n";
 
 				std::cout << "Graph traversal (1)\n";
 				std::cout << "Path finding (2)\n";
@@ -99,13 +101,30 @@ int main()
 					{
 
 					}
+
+					// AdjacencyMatrix
+					SetConsoleTextAttribute(h, 9); // Bright blue for input
+					std::cout << "Would you like to generate an adjacency matrix? no (0), yes (1): ";
+					std::cin >> action;
+					NumCheck(action);
+					
+					SetConsoleTextAttribute(h, 7); // White as default
+					std::cout << "\n";
+
+					if (action == 1)
+					{
+						AdjacencyMatrix A;
+						A.PrintMatrix();
+					}
 				}
 
 				// Path Finding
 				else if (action == 2)
 				{
+					
+
 					SetConsoleTextAttribute(h, 9); // Bright blue for input
-					std::cout << "Do you want to save result to file no (0) yes (1)";
+					std::cout << "Do you want to save result to file? no (0) yes (1): ";
 					std::cin >> action;
 					NumCheck(action);
 
@@ -126,6 +145,7 @@ int main()
 			}
 		}
 
+		// TODO: User input before clearing text
 		// ClearText();
 	}
 

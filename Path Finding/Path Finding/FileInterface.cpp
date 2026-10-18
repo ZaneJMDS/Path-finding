@@ -107,29 +107,34 @@ bool FileInterface::LoadGraph()
 	// Checks
 	if (start_tiles != 1) 
 	{
-		std::cout << "Only one start tile allowed\n";
+		std::cout << "Only one start tile allowed!\n";
 		return false; 
 	}
 	
 	if (exit_tiles != 1) 
 	{ 
-		std::cout << "Only one exit tile allowed\n";
+		std::cout << "Only one exit tile allowed!\n";
 		return false; 
 	}
 
 	if (items != 10) 
 	{
-		std::cout << "Not 10 items\n";
+		std::cout << "File dosn't contain 10 exact items!\n";
 		return false; 
 	}
 	
 	if (row_count != 20) 
 	{ 
-		std::cout << "More / less than 20 rows\n";
+		std::cout << "More / less than 20 rows!\n";
 		return false; 
 	} // Crashes if over
 
-	// TODO check if columns is equal to 20 
+	// TODO needs update
+	if (level_height != 20)
+	{
+		std::cout << "More / less than 20 collumns!\n";
+		return false;
+	}
 
 	// Passed all checks
 	return true;

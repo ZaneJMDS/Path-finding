@@ -1,5 +1,6 @@
 #include "AStar.h"
 
+// For calculating A Star
 void AStar::Calculate(std::vector<float> a, std::vector<float> b)
 {
 	// Heuristic value
@@ -12,17 +13,18 @@ void AStar::Calculate(std::vector<float> a, std::vector<float> b)
 	while (true)
 	{
 		// For all neighbours
-		for (int i = 0; i < neighbour_list.size(); i++)
+/*		for (int i = 0; i < neighbour_list.size(); i++)
 		{
 			// If not an obstacle
 			if (neighbour_list[i] != 'x')
 			{
+				// Total cost
 				float F = G + H;
 
 				// If on the open list
 				
 			}
-		}
+		}*/
 	}
 }
 
@@ -36,12 +38,14 @@ void AStar::CheckVectorLengths(std::vector<float> a, std::vector<float> b)
 	}
 }
 
+// Compare distance between 2 points assuming you CAN NOT go diagonally
 float AStar::ManHattanDistance(std::vector<float> a, std::vector<float> b)
 {
 	CheckVectorLengths(a, b);
 	return abs(a[0] - b[0]) + abs(a[1] - b[1]);
 }
 
+// Compare distance between 2 points assuming you CAN go diagonally
 float AStar::EuclidianDistance(std::vector<float> a, std::vector<float> b)
 {
 	CheckVectorLengths(a, b);
