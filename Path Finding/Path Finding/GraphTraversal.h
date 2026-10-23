@@ -1,3 +1,10 @@
+/***********************************************************************
+Author      :	Zane Sebastian Jackson
+Mail        :   Zane.Jackson@mds.ac.nz
+Description :	Depth first search (DFS) and Breadth first search (BFS)
+File name   :   GraphTraversal.h
+**************************************************************************/
+
 #pragma once
 #include <vector>
 #include "Node.h"
