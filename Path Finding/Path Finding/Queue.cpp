@@ -9,6 +9,7 @@ Queue::~Queue()
     heap.clear();
 }
 
+// Compare 2 items
 struct comp
 {
     bool operator() (Item& a, Item& b)
@@ -17,12 +18,14 @@ struct comp
     }
 };
 
+// Add an item
 void Queue::Push(Item _Item)
 {
     heap.push_back(_Item);
     std::push_heap(heap.begin(), heap.end(), comp());
 }
 
+// Remove an item
 Item Queue::Pop()
 {
     if (heap.size() < 1)

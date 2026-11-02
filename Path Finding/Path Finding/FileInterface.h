@@ -27,9 +27,5 @@ public:
 	bool LoadGraph();
 	void SaveFile();
 	std::string PrintGraph();
-
-private:
-	std::fstream myfile;
-	std::ofstream writefile;
 };
 

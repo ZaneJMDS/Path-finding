@@ -17,5 +17,8 @@ public:
 
 	void DepthFirst(Node* G, Node* v);
 	void BreadthFirst(Node* G, Node* v);
+
+	void DepthFirst();
+	void BreadthFirst();
 };
 

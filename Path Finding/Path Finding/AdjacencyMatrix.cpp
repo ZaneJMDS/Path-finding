@@ -1,5 +1,6 @@
 #include "AdjacencyMatrix.h"
 
+// Print the weightings of an adjacency matrix
 void AdjacencyMatrix::PrintMatrix()
 {
 	std::cout << "Adjacency matrix\n";

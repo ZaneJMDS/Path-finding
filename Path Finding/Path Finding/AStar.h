@@ -12,10 +12,7 @@ File name   :   Astar.h
 class AStar
 {
 public:
-	std::vector<Item> closed_list;
-	Queue open_list;
-
-	void Calculate(std::vector<float> a, std::vector<float> b);
+	void Calculate();
 	void CheckVectorLengths(std::vector<float> a, std::vector<float> b);
 
 	// Both are continuous methods

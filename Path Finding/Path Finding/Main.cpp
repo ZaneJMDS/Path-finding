@@ -7,16 +7,17 @@ File name   :   Main.cpp
 
 #include "FileInterface.h"
 #include "AdjacencyMatrix.h"
+#include "GraphTraversal.h"
 
 // Clear console text
-void ClearText()
+static void ClearText()
 {
 	std::cout << "\x1b[2J\x1b[3J"; // Clear
 	std::cout << "\x1b[H"; // Moves text back to top left alligned
 }
 
 // Check input is a integer
-int NumCheck(int _num)
+static int NumCheck(int _num)
 {
 	std::cin.ignore(100000, '\n'); // Clears floating points
 	// Don't accept a number less than or equal to 0
@@ -90,16 +91,18 @@ int main()
 					SetConsoleTextAttribute(h, 7); // White as default
 					std::cout << "\n";
 
+					GraphTraversal gt;
+
 					// Depth-First Search
 					if (action == 1)
 					{
-
+						gt.DepthFirst();
 					}
 
 					// Breadth-First Search
 					else if (action == 2)
 					{
-
+						gt.BreadthFirst();
 					}
 
 					// AdjacencyMatrix
@@ -111,6 +114,7 @@ int main()
 					SetConsoleTextAttribute(h, 7); // White as default
 					std::cout << "\n";
 
+					// Display adjacency matrix
 					if (action == 1)
 					{
 						AdjacencyMatrix A;
@@ -121,8 +125,6 @@ int main()
 				// Path Finding
 				else if (action == 2)
 				{
-					
-
 					SetConsoleTextAttribute(h, 9); // Bright blue for input
 					std::cout << "Do you want to save result to file? no (0) yes (1): ";
 					std::cin >> action;
@@ -139,14 +141,20 @@ int main()
 				}
 			}
 
+			// Graph has failed a check
 			else
 			{
 				std::cout << "Invalid graph";
 			}
 		}
 
-		// TODO: User input before clearing text
-		// ClearText();
+		// Refresh text on the screen
+		std::cin.clear();
+		std::cin.ignore(100000, '\n'); // Ignore user input
+		SetConsoleTextAttribute(h, 9); // Bright blue text for input
+		std::cout << "Click <enter> to return to the menu";
+		std::cin.ignore(100000, '\n'); // Ignore user input
+		ClearText();
 	}
 
 	return 0;

@@ -8,6 +8,7 @@ File name   :   AdjacencyMatrix.h
 #pragma once
 #include <iostream>
 
+// Might move this class back to graph traversal
 class AdjacencyMatrix
 {
 public:

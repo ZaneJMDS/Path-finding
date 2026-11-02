@@ -12,6 +12,9 @@ bool FileInterface::LoadGraph()
 {
 	HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
 
+	int line_count = 0;
+	int column_count = 0;
+
 	if (SUCCEEDED(hr))
 	{
 		IFileSaveDialog* pFileOpen;
@@ -46,19 +49,20 @@ bool FileInterface::LoadGraph()
 					// Display the file name to the user.
 					if (SUCCEEDED(hr))
 					{
-						// TODO DISPLAY INFORMATION TO USER
+						std::fstream myfile;
 						myfile.open(pszFilePath);
 
 						std::string load_file_string;
-						int line_count = 0;
 
 						// collumns
 						while (std::getline(myfile, load_file_string))
 						{
+							column_count = 0;
 							// rows
 							for (int i = 0; i < load_file_string.size(); i++)
 							{
 								level_array[i][line_count] = load_file_string[i];
+								column_count++;
 							}
 							line_count++;
 						}
@@ -74,11 +78,23 @@ bool FileInterface::LoadGraph()
 		}
 		CoUninitialize();
 	}
+	
+	// Checks part 1
+	if (line_count != 20)
+	{
+		std::cout << "More / less than 20 rows!\n";
+		return false;
+	}
+
+	if (column_count != 20)
+	{
+		std::cout << "More / less than 20 collumns!\n";
+		return false;
+	}
 
 	int start_tiles = 0;
 	int exit_tiles = 0;
 	int items = 0;
-	int row_count = 0;
 
 	// collumns
 	for (int y = 0; y < level_height; y++)
@@ -100,11 +116,11 @@ bool FileInterface::LoadGraph()
 			{
 				items++;
 			}
+			
 		}
-		row_count++;
 	}
 
-	// Checks
+	// Checks part 2
 	if (start_tiles != 1) 
 	{
 		std::cout << "Only one start tile allowed!\n";
@@ -121,19 +137,6 @@ bool FileInterface::LoadGraph()
 	{
 		std::cout << "File dosn't contain 10 exact items!\n";
 		return false; 
-	}
-	
-	if (row_count != 20) 
-	{ 
-		std::cout << "More / less than 20 rows!\n";
-		return false; 
-	} // Crashes if over
-
-	// TODO needs update
-	if (level_height != 20)
-	{
-		std::cout << "More / less than 20 collumns!\n";
-		return false;
 	}
 
 	// Passed all checks
@@ -182,6 +185,7 @@ void FileInterface::SaveFile()
 					// Write graph to file
 					if (SUCCEEDED(hr))
 					{
+						std::ofstream writefile;
 						writefile.open(pszFilePath);
 
 						// collumns

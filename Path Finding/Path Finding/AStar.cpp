@@ -1,28 +1,42 @@
 #include "AStar.h"
 
-// For calculating A Star
-void AStar::Calculate(std::vector<float> a, std::vector<float> b)
+// Calculating A Star with 
+void AStar::Calculate()
 {
-	// Heuristic value
-	float H = ManHattanDistance(a, b);
+	// Create 2 lists open and closed
+	Queue open;
+	std::vector<Item> closed;
 
-	// Cost
-	float G = EuclidianDistance(a, b);
+	// Add the START node to the Open list with f & g values of zero
+	Item Start;
+	open.Push(Start);
 
-	// While current != END
-	while (true)
+	// While there are still items in the open list
+	while (open.GetLength() != 0)
 	{
-		// For all neighbours
+		// For each neighbor n
 /*		for (int i = 0; i < neighbour_list.size(); i++)
 		{
-			// If not an obstacle
-			if (neighbour_list[i] != 'x')
+			// If not an obstacle or on the closed list
+			if (neighbour_list[i] != 'x' && std::find(closed.begin(), closed.end(), neighbours_list[i]))
 			{
+				// Heuristic value
+				// float H = ManHattanDistance(open, closed);
+
+				// Cost
+				// float G = EuclidianDistance(open, closed);
+
 				// Total cost
 				float F = G + H;
 
-				// If on the open list
+				If n is on the open list
+					update n.f & n.g
 				
+			}
+
+			else
+			{
+				add n to the Open list
 			}
 		}*/
 	}

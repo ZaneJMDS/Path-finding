@@ -19,13 +19,14 @@ void GraphTraversal::DepthFirst(Node* G, Node* v)
 	}
 }
 
+// Uses a heap
 void GraphTraversal::BreadthFirst(Node* G, Node* v)
 {
 	q.push(v);
 
 	while (q.size() > 0)
 	{
-		// Get the front of the queue
+		// Get the front of the heap
 		v = q.front();
 		q.pop();
 
@@ -44,4 +45,20 @@ void GraphTraversal::BreadthFirst(Node* G, Node* v)
 			}
 		}
 	}
+}
+
+// Call recursive
+void GraphTraversal::DepthFirst()
+{
+	Node* a;
+	Node* b;
+	DepthFirst(a, b);
+}
+
+// Call recursive
+void GraphTraversal::BreadthFirst()
+{
+	Node* a;
+	Node* b;
+	BreadthFirst(a, b);
 }
