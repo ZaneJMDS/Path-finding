@@ -1,44 +1,66 @@
 #include "AStar.h"
 
-// Calculating A Star with 
 void AStar::Calculate()
 {
 	// Create 2 lists open and closed
-	Queue open;
-	std::vector<Item> closed;
+	Queue open; // Heap
+	std::vector<Item> closed; // Vector
 
 	// Add the START node to the Open list with f & g values of zero
 	Item Start;
+	Start.f = 0;
+	Start.g = 0;
 	open.Push(Start);
 
 	// While there are still items in the open list
 	while (open.GetLength() != 0)
 	{
+		// Remove the node at the head of the open list and add to the back of the closed list
+		closed.push_back(open.Pop()); // This becomes the current node
+		Item current = closed.back();
+
+		// TODO FIND WAY TO POPULATE NEIGHBOUR LIST
 		// For each neighbor n
-/*		for (int i = 0; i < neighbour_list.size(); i++)
+		for (int i = 0; i < current.neighbour_list.size(); i++)
 		{
 			// If not an obstacle or on the closed list
-			if (neighbour_list[i] != 'x' && std::find(closed.begin(), closed.end(), neighbours_list[i]))
+			if (current.neighbour_list[i].GetIdentifier() != "x" && std::find(closed.begin(), closed.end(), current.neighbour_list[i]) != closed.end())
 			{
-				// Heuristic value
-				// float H = ManHattanDistance(open, closed);
+				// H: Estimated cost to get from the node n to the goal
+				current.neighbour_list[i].h = ManHattanDistance();
 
-				// Cost
-				// float G = EuclidianDistance(open, closed);
+				// G: Cost to reach the node n
+				current.neighbour_list[i].g = EuclidianDistance();
 
-				// Total cost
-				float F = G + H;
+				// F: Estimated total cost of path through n to the goal
+				current.neighbour_list[i].f = current.neighbour_list[i].h + current.neighbour_list[i].g;
 
-				If n is on the open list
-					update n.f & n.g
+				// P = CURRENT Node
+				current.neighbour_list[i].p = &current;
 				
-			}
+				// n.g = distance from CURRENT to n + CURRENT.g
+				current.neighbour_list[i].g = EuclidianDistance() + current.neighbour_list[i].p->g;
 
-			else
-			{
-				add n to the Open list
+				std::cout << "n.g: " << current.neighbour_list[i].g << ", o.g: " << open.GetItem(current.neighbour_list[i]).g << "\n";
+
+				// N is on the open list and NeighbourList[i].g < Open.g
+				// TODO Make another function in Item which returns the found item instead of bool
+				if (open.Find(current.neighbour_list[i]) && current.neighbour_list[i].g < open.GetItem(current.neighbour_list[i]).g)
+				{
+					// Update n.f & n.g & n.p
+					std::cout << "Update n.f, n.g, n.p\n";
+					current.neighbour_list[i].g = EuclidianDistance();
+					current.neighbour_list[i].f = current.neighbour_list[i].h + current.neighbour_list[i].g;
+				}
+
+				// Push N to the Open list
+				else
+				{
+					std::cout << "Pushing n to the open list\n";
+					open.Push(current.neighbour_list[i]);
+				}
 			}
-		}*/
+		}
 	}
 }
 

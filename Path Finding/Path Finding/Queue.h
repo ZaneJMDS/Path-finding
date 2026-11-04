@@ -1,6 +1,6 @@
 /***********************************************************************
 Author      :	Mike Watts
-Description :	Priority queue for heap sort
+Description :	Priority queue / min heap for sortint purposes
 File name   :   Queue.h
 **************************************************************************/
 
@@ -18,6 +18,8 @@ public:
 	void Push(Item _Item);
 	Item Pop();
 	float PriorityFront();
+	bool Find(Item _Item);
+	Item GetItem(Item _Item);
 	int GetLength() { return heap.size(); }
 
 protected:

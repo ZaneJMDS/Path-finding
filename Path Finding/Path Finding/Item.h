@@ -1,6 +1,6 @@
 /***********************************************************************
 Author      :	Mike Watts
-Description :	Used in heap sort
+Description :	Used in heap sort (Modified to fit A*)
 File name   :   Item.h
 **************************************************************************/
 
@@ -14,6 +14,7 @@ public:
 	{
 		identifier = _identifier;
 		priority = _priority;
+		p = nullptr;
 	}
 
 	~Item() {};
@@ -21,6 +22,13 @@ public:
 	std::string GetIdentifier() { return identifier; }
 	float GetPriority() { return priority; }
 	void SetPriority(float _priority) { priority = _priority; }
+
+	// Thingies for A*
+	std::vector<Item> neighbour_list;
+	float f;
+	float g;
+	float h;
+	Item* p;
 
 protected:
 	float priority;

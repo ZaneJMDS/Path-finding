@@ -1,5 +1,6 @@
 #include "Queue.h"
 
+// This is a MIN HEAP
 Queue::Queue()
 {
 }
@@ -25,7 +26,7 @@ void Queue::Push(Item _Item)
     std::push_heap(heap.begin(), heap.end(), comp());
 }
 
-// Remove an item
+// Remove the head item
 Item Queue::Pop()
 {
     if (heap.size() < 1)
@@ -51,4 +52,22 @@ float Queue::PriorityFront()
     }
 
     return heap[0].GetPriority();
+}
+
+// Find if item is in the heap
+bool Queue::Find(Item _Item)
+{
+    // If found return true
+    return std::find(heap.begin(), heap.end(), _Item) != heap.end();
+}
+
+// Like find, but returns the found item
+// TODO find a better way to do this
+Item Queue::GetItem(Item _Item)
+{
+    std::vector<Item>::iterator it = std::find(heap.begin(), heap.end(), _Item);
+    std::distance(heap.begin(), it);
+
+    // Still need to find a way to return the found item
+    return 
 }

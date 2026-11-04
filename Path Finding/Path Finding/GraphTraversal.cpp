@@ -3,6 +3,8 @@
 // Graph and current node
 void GraphTraversal::DepthFirst(Node* G, Node* v)
 {
+	// Maybe? Instead of using a queue, replace with a stack
+
 	// Set visit to true for current
 	v->visited = true;
 

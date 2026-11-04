@@ -8,6 +8,7 @@ File name   :   Astar.h
 #pragma once
 #include <vector>
 #include "Queue.h"
+#include <iostream>
 
 class AStar
 {
