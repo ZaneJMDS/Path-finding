@@ -6,8 +6,8 @@ File name   :   Main.cpp
 **************************************************************************/
 
 #include "FileInterface.h"
-#include "AdjacencyMatrix.h"
 #include "GraphTraversal.h"
+#include "AStar.h"
 
 // Clear console text
 static void ClearText()
@@ -45,7 +45,7 @@ int main()
 	while (action != 10)
 	{
 		SetConsoleTextAttribute(h, 7); // White as default
-		std::cout << "Menu\n\n";
+		std::cout << "PATH FINDING\n\n";
 		std::cout << "Load Graph (1)\n";
 		std::cout << "Quit (10)\n";
 
@@ -117,26 +117,31 @@ int main()
 					// Display adjacency matrix
 					if (action == 1)
 					{
-						AdjacencyMatrix A;
-						A.PrintMatrix();
+						gt.PrintAdjacencyMatrix();
 					}
 				}
 
 				// Path Finding
 				else if (action == 2)
 				{
-					SetConsoleTextAttribute(h, 9); // Bright blue for input
-					std::cout << "Do you want to save result to file? no (0) yes (1): ";
-					std::cin >> action;
-					NumCheck(action);
-
-					SetConsoleTextAttribute(h, 7); // White as default
-					std::cout << "\n";
-
-					// Save file
-					if (action == 1)
+					AStar a_star;
+					
+					// Only print result to file if valid
+					if (a_star.Calculate())
 					{
-						File.SaveFile();
+						SetConsoleTextAttribute(h, 9); // Bright blue for input
+						std::cout << "Do you want to save result to file? no (0) yes (1): ";
+						std::cin >> action;
+						NumCheck(action);
+
+						SetConsoleTextAttribute(h, 7); // White as default
+						std::cout << "\n";
+
+						// Save file
+						if (action == 1)
+						{
+							File.SavePath(a_star.level_path);
+						}
 					}
 				}
 			}
@@ -144,16 +149,14 @@ int main()
 			// Graph has failed a check
 			else
 			{
-				std::cout << "Invalid graph";
+				std::cout << "Invalid graph\n";
 			}
 		}
 
 		// Refresh text on the screen
-		std::cin.clear();
-		std::cin.ignore(100000, '\n'); // Ignore user input
 		SetConsoleTextAttribute(h, 9); // Bright blue text for input
 		std::cout << "Click <enter> to return to the menu";
-		std::cin.ignore(100000, '\n'); // Ignore user input
+		std::cin.get();
 		ClearText();
 	}
 

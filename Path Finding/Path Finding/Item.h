@@ -6,11 +6,12 @@ File name   :   Item.h
 
 #pragma once
 #include <string>
+#include <vector>
 
 class Item
 {
 public:
-	Item(std::string _identifier = "", float _priority = 0.0f)
+	Item(char _identifier = ' ', float _priority = 0.0f)
 	{
 		identifier = _identifier;
 		priority = _priority;
@@ -19,18 +20,31 @@ public:
 
 	~Item() {};
 
-	std::string GetIdentifier() { return identifier; }
+	char GetIdentifier() { return identifier; }
 	float GetPriority() { return priority; }
 	void SetPriority(float _priority) { priority = _priority; }
 
+	// THX Nic this makes my code compile
+	inline bool operator==(const Item& rhs) const
+	{
+		return x == rhs.x && y == rhs.y;
+	}
+
 	// Thingies for A*
 	std::vector<Item> neighbour_list;
-	float f;
-	float g;
-	float h;
+	float f = 0.f;
+	float g = 0.f;
+	float h = 0.f;
 	Item* p;
+
+	// Thingies for path finding
+	bool visited = false;
+
+	// Location
+	int x = 0.f;
+	int y = 0.f;
 
 protected:
 	float priority;
-	std::string identifier;
+	char identifier;
 };

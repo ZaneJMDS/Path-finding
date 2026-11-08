@@ -13,11 +13,12 @@ File name   :   Astar.h
 class AStar
 {
 public:
-	void Calculate();
-	void CheckVectorLengths(std::vector<float> a, std::vector<float> b);
+	char level_path[20][20];
+
+	bool Calculate();
 
 	// Both are continuous methods
-	float ManHattanDistance(std::vector<float> a, std::vector<float> b);
-	float EuclidianDistance(std::vector<float> a, std::vector<float> b);
+	float ManHattanDistance(Item* a, Item* b);
+	float EuclidianDistance(Item* a, Item* b);
 };
 

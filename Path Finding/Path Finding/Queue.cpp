@@ -69,5 +69,5 @@ Item Queue::GetItem(Item _Item)
     std::distance(heap.begin(), it);
 
     // Still need to find a way to return the found item
-    return 
+    return _Item;
 }

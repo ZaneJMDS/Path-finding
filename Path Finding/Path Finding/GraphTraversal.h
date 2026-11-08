@@ -7,18 +7,27 @@ File name   :   GraphTraversal.h
 
 #pragma once
 #include <vector>
-#include "Node.h"
+#include "item.h"
+#include <iostream>
 #include <queue> // For breadth first
 
 class GraphTraversal
 {
 public:
-	std::queue<Node*> q;
+	// For graph traversal
+	std::queue<Item*> q;
 
-	void DepthFirst(Node* G, Node* v);
-	void BreadthFirst(Node* G, Node* v);
+	void DepthFirst(std::vector<Item*> G, Item* v); // G is the graph Recalculate g everytime you update a node
+	void BreadthFirst(std::vector<Item*> G, Item* v);
 
 	void DepthFirst();
 	void BreadthFirst();
+
+	// For adjacencey
+	float weightings[11][11];
+	void PrintAdjacencyMatrix();
+
+protected:
+	std::vector<std::vector<bool>> adjacencies;
 };
 

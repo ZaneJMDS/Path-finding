@@ -25,7 +25,7 @@ public:
 	~FileInterface();
 
 	bool LoadGraph();
-	void SaveFile();
+	void SavePath(char _level_path[20][20]);
 	std::string PrintGraph();
 };
 

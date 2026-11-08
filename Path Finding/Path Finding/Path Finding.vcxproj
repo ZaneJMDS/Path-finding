@@ -139,7 +139,6 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AdjacencyMatrix.cpp" />
     <ClCompile Include="AStar.cpp" />
     <ClCompile Include="FileInterface.cpp" />
     <ClCompile Include="GraphTraversal.cpp" />
@@ -147,12 +146,10 @@
     <ClCompile Include="Queue.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AdjacencyMatrix.h" />
     <ClInclude Include="AStar.h" />
     <ClInclude Include="FileInterface.h" />
     <ClInclude Include="GraphTraversal.h" />
     <ClInclude Include="Item.h" />
-    <ClInclude Include="Node.h" />
     <ClInclude Include="Queue.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

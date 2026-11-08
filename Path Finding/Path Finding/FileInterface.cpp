@@ -116,7 +116,6 @@ bool FileInterface::LoadGraph()
 			{
 				items++;
 			}
-			
 		}
 	}
 
@@ -143,7 +142,8 @@ bool FileInterface::LoadGraph()
 	return true;
 }
 
-void FileInterface::SaveFile()
+// Once a valid path has been found for A*, save the result to file
+void FileInterface::SavePath(char _level_path[20][20])
 {
 	HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
 
@@ -194,7 +194,7 @@ void FileInterface::SaveFile()
 							// rows
 							for (int x = 0; x < level_width; x++)
 							{
-								writefile << level_array[x][y];
+								writefile << _level_path[x][y];
 							}
 							writefile << "\n";
 						}

@@ -1,15 +1,15 @@
 #include "AStar.h"
 
-void AStar::Calculate()
+// A star ignores the items
+// Returns true if valid path
+bool AStar::Calculate()
 {
 	// Create 2 lists open and closed
 	Queue open; // Heap
 	std::vector<Item> closed; // Vector
 
-	// Add the START node to the Open list with f & g values of zero
+	// Add the START node to the Open list with default f & g values of zero
 	Item Start;
-	Start.f = 0;
-	Start.g = 0;
 	open.Push(Start);
 
 	// While there are still items in the open list
@@ -24,13 +24,13 @@ void AStar::Calculate()
 		for (int i = 0; i < current.neighbour_list.size(); i++)
 		{
 			// If not an obstacle or on the closed list
-			if (current.neighbour_list[i].GetIdentifier() != "x" && std::find(closed.begin(), closed.end(), current.neighbour_list[i]) != closed.end())
+			if (current.neighbour_list[i].GetIdentifier() != 'x' && std::find(closed.begin(), closed.end(), current.neighbour_list[i]) != closed.end())
 			{
 				// H: Estimated cost to get from the node n to the goal
-				current.neighbour_list[i].h = ManHattanDistance();
+				current.neighbour_list[i].h = ManHattanDistance(&current, &current.neighbour_list[i]);
 
 				// G: Cost to reach the node n
-				current.neighbour_list[i].g = EuclidianDistance();
+				current.neighbour_list[i].g = EuclidianDistance(&current, &current.neighbour_list[i]);
 
 				// F: Estimated total cost of path through n to the goal
 				current.neighbour_list[i].f = current.neighbour_list[i].h + current.neighbour_list[i].g;
@@ -39,17 +39,17 @@ void AStar::Calculate()
 				current.neighbour_list[i].p = &current;
 				
 				// n.g = distance from CURRENT to n + CURRENT.g
-				current.neighbour_list[i].g = EuclidianDistance() + current.neighbour_list[i].p->g;
+				current.neighbour_list[i].g = EuclidianDistance(&current, &current.neighbour_list[i]) + current.neighbour_list[i].p->g;
 
 				std::cout << "n.g: " << current.neighbour_list[i].g << ", o.g: " << open.GetItem(current.neighbour_list[i]).g << "\n";
 
 				// N is on the open list and NeighbourList[i].g < Open.g
 				// TODO Make another function in Item which returns the found item instead of bool
-				if (open.Find(current.neighbour_list[i]) && current.neighbour_list[i].g < open.GetItem(current.neighbour_list[i]).g)
+				if (open.Find(current.neighbour_list[i])) // && current.neighbour_list[i].g < open.GetItem(current.neighbour_list[i]).g)
 				{
 					// Update n.f & n.g & n.p
 					std::cout << "Update n.f, n.g, n.p\n";
-					current.neighbour_list[i].g = EuclidianDistance();
+					current.neighbour_list[i].g = EuclidianDistance(&current, &current.neighbour_list[i]);
 					current.neighbour_list[i].f = current.neighbour_list[i].h + current.neighbour_list[i].g;
 				}
 
@@ -62,30 +62,33 @@ void AStar::Calculate()
 			}
 		}
 	}
-}
 
+	std::cout << "Closed size: " << closed.size() << "\n";
 
-// Both vectors need to be equal
-void AStar::CheckVectorLengths(std::vector<float> a, std::vector<float> b)
-{
-	if (a.size() != b.size())
+	// Valid path
+	if (closed.size() == 11) // 10 items + the start node
 	{
-		throw "Vector lengths dont match";
+		std::cout << "Valid pathway found\n"; 
+		return true;
+	}
+
+	// No path found
+	else
+	{
+		std::cout << "No pathway found\n";
+		return false;
 	}
 }
 
 // Compare distance between 2 points assuming you CAN NOT go diagonally
-float AStar::ManHattanDistance(std::vector<float> a, std::vector<float> b)
+float AStar::ManHattanDistance(Item* a, Item* b)
 {
-	CheckVectorLengths(a, b);
-	return abs(a[0] - b[0]) + abs(a[1] - b[1]);
+	return abs(a->x - b->x) + abs(a->y - b->y);
 }
 
 // Compare distance between 2 points assuming you CAN go diagonally
-float AStar::EuclidianDistance(std::vector<float> a, std::vector<float> b)
+float AStar::EuclidianDistance(Item* a, Item* b)
 {
-	CheckVectorLengths(a, b);
-
 	// pythagorous therom
-	return sqrt(pow((a[0] - b[0]), 2) + pow(a[1] - b[1], 2));
+	return sqrt(pow((a->x - b->x), 2) + pow((a->y - b->y), 2));
 }
