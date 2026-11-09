@@ -2,7 +2,7 @@
 
 // Graph and current node
 // Start at an arbitrary node and search all connected nodes
-void GraphTraversal::DepthFirst(Item* G, Item* v)
+void GraphTraversal::DepthFirst(std::vector<Item*> G, Item* v)
 {
 	// Set visit to true for current
 	v->visited = true;
@@ -21,7 +21,7 @@ void GraphTraversal::DepthFirst(Item* G, Item* v)
 
 // Uses a heap
 // Maintains a queue of nodes to visit next
-void GraphTraversal::BreadthFirst(Item* G, Item* v)
+void GraphTraversal::BreadthFirst(std::vector<Item*> G, Item* v)
 {
 	q.push(v);
 
@@ -52,40 +52,15 @@ void GraphTraversal::BreadthFirst(Item* G, Item* v)
 // Call recursive
 void GraphTraversal::DepthFirst()
 {
-	Item a('s', 0.f); // Graph
-	Item b('a', 1.f); // Start
-	DepthFirst(&a, &b);
+	std::vector<Item*> graph;
+	Item s('s', 0.f); // Start
+	DepthFirst(graph, graph[0]);
 }
 
 // Call itterative
 void GraphTraversal::BreadthFirst()
 {
-	std::vector<Item> graph; // Graph
+	std::vector<Item*> graph; // Graph
 	Item s('s', 0.f); // start
-	BreadthFirst(&a, &b);
-}
-
-// Print weightings
-void GraphTraversal::PrintAdjacencyMatrix()
-{
-	std::cout << "Adjacency matrix\n";
-	std::cout << "| |s|a|b|c|d|e|f|g|h|i|j|\n";
-
-	char letters[11] = { 's', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j' };
-
-	for (int y = 0; y < 11; y++)
-	{
-		std::cout << '|' << letters[y] << '|';
-
-		for (int x = 0; x < 11; x++)
-		{
-			// Only print if there is a valid weighting
-			if (weightings[x][y] != 0)
-			{
-				std::cout << weightings[x][y] << "|";
-			}
-			else { std::cout << ' ' << "|"; }
-		}
-		std::cout << std::endl;
-	}
+	BreadthFirst(graph, graph[0]);
 }

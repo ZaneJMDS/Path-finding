@@ -22,12 +22,5 @@ public:
 
 	void DepthFirst();
 	void BreadthFirst();
-
-	// For adjacencey
-	float weightings[11][11];
-	void PrintAdjacencyMatrix();
-
-protected:
-	std::vector<std::vector<bool>> adjacencies;
 };
 

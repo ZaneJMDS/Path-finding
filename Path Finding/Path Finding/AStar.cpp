@@ -65,8 +65,12 @@ bool AStar::Calculate()
 
 	std::cout << "Closed size: " << closed.size() << "\n";
 
+	// THIS IS THE INCORRECT WAY
+	// Size can be any size
+	
+	// Need to see if closed contains the end node
 	// Valid path
-	if (closed.size() == 11) // 10 items + the start node
+	if (closed[0].GetIdentifier() == 'x') // Found the exit node
 	{
 		std::cout << "Valid pathway found\n"; 
 		return true;
@@ -83,6 +87,7 @@ bool AStar::Calculate()
 // Compare distance between 2 points assuming you CAN NOT go diagonally
 float AStar::ManHattanDistance(Item* a, Item* b)
 {
+	// Should return a whole number distance
 	return abs(a->x - b->x) + abs(a->y - b->y);
 }
 
