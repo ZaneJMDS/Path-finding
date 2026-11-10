@@ -20,5 +20,7 @@ public:
 	// Both are continuous methods
 	float ManHattanDistance(Item* a, Item* b);
 	float EuclidianDistance(Item* a, Item* b);
+
+	std::string PrintLevelPath();
 };
 

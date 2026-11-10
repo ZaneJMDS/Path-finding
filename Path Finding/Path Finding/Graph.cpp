@@ -1,7 +1,7 @@
 #include "Graph.h"
 
 // Check if a node is in the graph
-bool Graph::NodeExist(Item* _item)
+bool Graph::NodeExist(char _item)
 {
     return node_indices.find(_item) != node_indices.end();
 }
@@ -13,12 +13,12 @@ int Graph::GetNumNodes()
 }
 
 // Get all the items
-std::vector<Item*> Graph::GetNodeList()
+std::vector<char> Graph::GetNodeList()
 {
-    std::vector<Item*> node_list; // list of nodes to return
+    std::vector<char> node_list; // list of nodes to return
 
     // Iterate over the map
-    for (std::map<Item*, Item*>::iterator it = node_indices.begin(); it != node_indices.end(); ++it)
+    for (std::map<char, int>::iterator it = node_indices.begin(); it != node_indices.end(); ++it)
     {
         node_list.push_back(it->first);
     }

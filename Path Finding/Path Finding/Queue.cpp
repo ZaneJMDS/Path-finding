@@ -75,7 +75,7 @@ Item Queue::FindNode(float x, float y)
     Item current = heap[0]; // Start at the beggining
 
     // Iterate until the node has been found
-    for (current.x != x && current.y != y)
+    while (current.x != x && current.y != y)
     {
         // Implement iterative here
     }
@@ -88,6 +88,7 @@ std::vector<Item> Queue::GetNeighbourNodes(Item _Item)
 {
     std::vector<Item> neighbours;
 
+    // Eight neighbours
     // Collumns
     for (int i = -1; i < 2; i++)
     {
@@ -110,7 +111,7 @@ std::vector<Item> Queue::GetNeighbourNodes(Item _Item)
         near_wall = true;
     }
 
-    // If neighbours contain a wall, only return cardinal directions
+    // If neighbours contain a wall, only return the 4 cardinal directions
     if (near_wall)
     {
         neighbours.clear();

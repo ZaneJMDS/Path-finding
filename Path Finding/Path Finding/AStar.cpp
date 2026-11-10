@@ -1,24 +1,29 @@
 #include "AStar.h"
 
-// A star ignores the items and just finds the most efficient path
+// A star ignores the items and just finds the most efficient path in a 2d array
 // Returns true if valid path
 bool AStar::Calculate()
 {
 	// Create 2 lists open and closed
-	Queue open; // Heap
-	std::vector<Item> closed; // Vector
+	Queue open;
+	std::vector<Item> closed;
 
 	// Add the START node to the Open list with default f & g values of zero
-	Item Start;
+	Item Start('s', 0.f);
+	
+	// Initilize the x and y values
+	Start.x;
+	Start.y;
+
 	open.Push(Start);
 
 	// While there are still items in the open list
-	while (open.GetLength() != 0)
+	while (open.GetLength() != 0 && closed.back() != 'x')
 	{
 		// Remove the node at the head of the open list and add to the back of the closed list
 		closed.push_back(open.Pop()); // This becomes the current node
 		Item current = closed.back();
-		closed. // Get neighbours 
+		open.GetNeighbourNodes(current); // TODO UPDATE Get neighbours method
 
 		// For each neighbor n
 		for (int i = 0; i < current.neighbour_list.size(); i++)
@@ -47,7 +52,6 @@ bool AStar::Calculate()
 				// TODO Make another function in Item which returns the found item instead of bool
 				if (open.Find(current.neighbour_list[i])) // && current.neighbour_list[i].g < open.GetItem(current.neighbour_list[i]).g)
 				{
-					// Update n.f & n.g & n.p
 					std::cout << "Update n.f, n.g, n.p\n";
 					current.neighbour_list[i].g = EuclidianDistance(&current, &current.neighbour_list[i]);
 					current.neighbour_list[i].f = current.neighbour_list[i].h + current.neighbour_list[i].g;
@@ -70,6 +74,17 @@ bool AStar::Calculate()
 	if (closed.back().GetIdentifier() == 'x') // Found the exit node
 	{
 		std::cout << "Valid pathway found\n"; 
+
+		// Every item on the closed list is one that the algorithim has visited
+		// Set that as the pathway
+		for (int i = 0; i < closed.size(); i++)
+		{
+			level_path[closed[i].x][closed[i].y] = 'p';
+		}
+
+		// Print out for the user here
+		std::cout << PrintLevelPath();
+
 		return true;
 	}
 
@@ -93,4 +108,21 @@ float AStar::EuclidianDistance(Item* a, Item* b)
 {
 	// pythagorous therom
 	return sqrt(pow((a->x - b->x), 2) + pow((a->y - b->y), 2));
+}
+
+std::string AStar::PrintLevelPath()
+{
+	std::string graph = "";
+
+	// collumns
+	for (int y = 0; y < 20; y++)
+	{
+		// rows
+		for (int x = 0; x < 20; x++)
+		{
+			graph += level_path[x][y];
+		}
+		graph += "\n";
+	}
+	return graph;
 }
