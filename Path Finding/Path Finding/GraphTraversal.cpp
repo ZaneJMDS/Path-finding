@@ -2,29 +2,30 @@
 
 // Graph and current node
 // Start at an arbitrary node and search all connected nodes
-void GraphTraversal::DepthFirst(std::vector<Item*> G, Item* v)
+void GraphTraversal::DepthFirst(AdjacencyMatrix* G, Item* v)
 {
 	// Set visit to true for current
 	v->visited = true;
 
 	// For w in G neighbours
-	for (int i = 0; G->neighbour_list.size(); i++)
+	for (int i = 0; G->GetNeighbours(v).size(); i++)
 	{
-		Item w = G->neighbour_list[i];
+		Item* w = G->GetNeighbours(v)[i];
 
-		if (!w.visited)
+		if (!w->visited)
 		{
-			DepthFirst(G, &w);
+			DepthFirst(G, w);
 		}
 	}
 }
 
 // Uses a heap
 // Maintains a queue of nodes to visit next
-void GraphTraversal::BreadthFirst(std::vector<Item*> G, Item* v)
+void GraphTraversal::BreadthFirst(AdjacencyMatrix* G, Item* v)
 {
+	std::queue<Item*> q; // Order of nodes to visit
 	q.push(v);
-
+	
 	while (q.size() > 0)
 	{
 		// Get the front of the heap
@@ -36,13 +37,13 @@ void GraphTraversal::BreadthFirst(std::vector<Item*> G, Item* v)
 			v->visited = true;
 
 			// Visit every neighbour until an unvisited one is reached
-			for (int i = 0; G->neighbour_list.size(); i++)
+			for (int i = 0; i < G->GetNeighbours(v).size(); i++)
 			{
-				Item w = G->neighbour_list[i];
+				Item* w = G->GetNeighbours(v)[i];
 				
-				if (!w.visited)
+				if (!w->visited)
 				{
-					q.push(&w);
+					q.push(w);
 				}
 			}
 		}
@@ -52,15 +53,15 @@ void GraphTraversal::BreadthFirst(std::vector<Item*> G, Item* v)
 // Call recursive
 void GraphTraversal::DepthFirst()
 {
-	std::vector<Item*> graph;
-	Item s('s', 0.f); // Start
-	DepthFirst(graph, graph[0]);
+	AdjacencyMatrix graph;
+
+	DepthFirst(&graph, graph.GetNodeList()[0]);
 }
 
 // Call itterative
 void GraphTraversal::BreadthFirst()
 {
-	std::vector<Item*> graph; // Graph
-	Item s('s', 0.f); // start
-	BreadthFirst(graph, graph[0]);
+	AdjacencyMatrix graph; // Graph
+
+	BreadthFirst(&graph, graph.GetNodeList()[0]);
 }

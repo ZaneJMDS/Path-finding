@@ -1,3 +1,10 @@
+/***********************************************************************
+Author      :	Zane Sebastian Jackson
+Mail        :   Zane.Jackson@mds.ac.nz
+Description :	AdjacencyMatrix for graph traversal methods
+File name   :   AdjacencyMatrix.h
+**************************************************************************/
+
 #pragma once
 #include <vector>
 #include "Graph.h"

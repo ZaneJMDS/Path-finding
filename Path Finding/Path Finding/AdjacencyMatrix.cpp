@@ -32,8 +32,8 @@ void AdjacencyMatrix::Connect(Item* a, Item* b)
 		throw "Node dosn't exist";
 	}
 
-	int indexA = node_indices[a];
-	int indexB = node_indices[b];
+	int indexA = 0; // node_indices[a];
+	int indexB = 0; // node_indices[b];
 
 	adjacencies[indexA][indexB];
 	adjacencies[indexB][indexA];
@@ -47,13 +47,13 @@ bool AdjacencyMatrix::AreConnected(Item* a, Item* b)
 		throw "Node dosn't exist";
 	}
 
-	int indexA = node_indices[a];
-	int indexB = node_indices[b];
+	int indexA = 0;//node_indices[a];
+	int indexB = 0;//node_indices[b];
 
 	return adjacencies[indexA][indexB] != 0; // Order of indices dosn't matter
 }
 
-// Get the neighbours of an item
+// Neighbours of an item are on the same row or collumn of the adjacency matrix
 std::vector<Item*> AdjacencyMatrix::GetNeighbours(Item* a)
 {
 	if (!NodeExist(a))
@@ -63,14 +63,15 @@ std::vector<Item*> AdjacencyMatrix::GetNeighbours(Item* a)
 
 	std::vector<Item*> neighbours;
 
-	int node_index = node_indices[a];
+	int node_index = 0; // node_indices[a];
 
 	// Loop over elements in the node's row of the matrix
 	for (int i = 0; i < GetNumNodes(); i++)
 	{
 		if (adjacencies[node_index][i])
 		{
-			Item label = node_labels[i];
+			// Item* label = node_labels[i];
+			Item label;
 			neighbours.push_back(&label);
 		}
 	}

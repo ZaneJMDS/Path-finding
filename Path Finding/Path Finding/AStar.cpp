@@ -1,6 +1,6 @@
 #include "AStar.h"
 
-// A star ignores the items
+// A star ignores the items and just finds the most efficient path
 // Returns true if valid path
 bool AStar::Calculate()
 {
@@ -18,8 +18,8 @@ bool AStar::Calculate()
 		// Remove the node at the head of the open list and add to the back of the closed list
 		closed.push_back(open.Pop()); // This becomes the current node
 		Item current = closed.back();
+		closed. // Get neighbours 
 
-		// TODO FIND WAY TO POPULATE NEIGHBOUR LIST
 		// For each neighbor n
 		for (int i = 0; i < current.neighbour_list.size(); i++)
 		{
@@ -64,13 +64,10 @@ bool AStar::Calculate()
 	}
 
 	std::cout << "Closed size: " << closed.size() << "\n";
-
-	// THIS IS THE INCORRECT WAY
-	// Size can be any size
 	
 	// Need to see if closed contains the end node
 	// Valid path
-	if (closed[0].GetIdentifier() == 'x') // Found the exit node
+	if (closed.back().GetIdentifier() == 'x') // Found the exit node
 	{
 		std::cout << "Valid pathway found\n"; 
 		return true;

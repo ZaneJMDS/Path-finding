@@ -1,12 +1,12 @@
 /***********************************************************************
 Author      :	Zane Sebastian Jackson
 Mail        :   Zane.Jackson@mds.ac.nz
-Description :	Path Finding
+Description :	Load a level with obstacles and items
 File name   :   FileInterface.h
 **************************************************************************/
 
 #pragma once
-#include <fstream>
+#include <fstream> 
 #include <iostream>
 #include <string>
 #include <windows.h>

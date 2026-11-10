@@ -1,5 +1,13 @@
+/***********************************************************************
+Author      :	Zane Sebastian Jackson
+Mail        :   Zane.Jackson@mds.ac.nz
+Description :	Graph that Adjacency Matrix uses
+File name   :   Graph.h
+**************************************************************************/
+
 #pragma once
 #include <map>
+#include "FileInterface.h"
 #include "Item.h"
 
 class Graph
@@ -7,7 +15,7 @@ class Graph
 protected:
 	std::map<Item*, Item*> node_indices; // Maps node labels to indicies
 	std::map<Item*, Item*> node_labels; // Maps node indicies to labels
-	Item* max_index = 0; // Maximum index adjacency matrix
+	Item* max_index = nullptr; // Maximum index adjacency matrix
 
 public:
 	Graph() {}

@@ -6,19 +6,17 @@ File name   :   GraphTraversal.h
 **************************************************************************/
 
 #pragma once
-#include <vector>
-#include "item.h"
 #include <iostream>
 #include <queue> // For breadth first
+#include "AdjacencyMatrix.h" // For neighbour list
 
 class GraphTraversal
 {
 public:
-	// For graph traversal
-	std::queue<Item*> q;
-
-	void DepthFirst(std::vector<Item*> G, Item* v); // G is the graph Recalculate g everytime you update a node
-	void BreadthFirst(std::vector<Item*> G, Item* v);
+	// G is the graph, and v is the current item / node
+	// Recalculate G everytime you update a node
+	void DepthFirst(AdjacencyMatrix* G, Item* v);
+	void BreadthFirst(AdjacencyMatrix* G, Item* v);
 
 	void DepthFirst();
 	void BreadthFirst();

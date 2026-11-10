@@ -1,11 +1,10 @@
 /***********************************************************************
 Author      :	Zane Sebastian Jackson
 Mail        :   Zane.Jackson@mds.ac.nz
-Description :	Path Finding
+Description :	Path Finding and graph traversal algorithim
 File name   :   Main.cpp
 **************************************************************************/
 
-#include "FileInterface.h"
 #include "GraphTraversal.h"
 #include "AStar.h"
 
@@ -39,7 +38,7 @@ int main()
 {
 	int action = 0;
 	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE); // Colour text for the console
-	FileInterface File; // Get the map
+	FileInterface File; // get the map
 
 	// Menu
 	while (action != 10)
@@ -117,7 +116,8 @@ int main()
 					// Display adjacency matrix
 					if (action == 1)
 					{
-						gt.PrintAdjacencyMatrix();
+						AdjacencyMatrix am;
+						am.PrintAdjacencyMatrix();
 					}
 				}
 
