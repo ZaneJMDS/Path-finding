@@ -15,10 +15,15 @@ class GraphTraversal
 public:
 	// G is the graph, and v is the current item / node
 	// Recalculate G everytime you update a node
-	void DepthFirst(AdjacencyMatrix* G, Item* v);
-	void BreadthFirst(AdjacencyMatrix* G, Item* v);
+	void DepthFirst(AdjacencyMatrix* G, char v);
+	void BreadthFirst(AdjacencyMatrix* G, char v);
 
 	void DepthFirst();
 	void BreadthFirst();
+
+	void PrintVisited();
+
+private:
+	std::vector<char> visited;
 };
 

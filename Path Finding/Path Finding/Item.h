@@ -37,9 +37,6 @@ public:
 	float h = 0.f;
 	Item* p;
 
-	// Thingies for path finding
-	bool visited = false;
-
 	// Location
 	int x = 0.f;
 	int y = 0.f;

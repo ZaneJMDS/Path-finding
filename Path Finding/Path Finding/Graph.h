@@ -15,14 +15,12 @@ class Graph
 protected:
 	std::map<char, int> node_indices = { {'s', 0}, {'a', 1}, {'b', 2}, {'c', 3}, {'d', 4}, {'e', 5}, {'f', 6}, {'g', 7}, {'h', 8}, {'i', 9}, {'j', 10}}; // Maps node labels to indicies
 	std::map<int, char> node_labels = { {0 , 's'}, {1, 'a'}, {2, 'b'}, {3, 'c'}, {4, 'd'}, {5, 'e'}, {6, 'f'}, {7, 'g'}, {8, 'h'}, {9, 'i'}, {10, 'j'}}; // Maps node indicies to labels
-	char max_index = ' '; // Maximum index adjacency matrix
 
 public:
 	Graph() {}
 
 	bool NodeExist(char _item); // check if a node exists
-	virtual void InsertNode(char _node_label); //inserts a node into the graph
-	int GetNumNodes(); // returns the number of nodes in the graph
+	const int GetNumNodes() { return 11; } // Number of items
 	std::vector<char> GetNodeList(); // returns a vector of the node labels
 };
 

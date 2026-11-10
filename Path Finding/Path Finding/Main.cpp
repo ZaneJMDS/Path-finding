@@ -90,6 +90,9 @@ int main()
 					SetConsoleTextAttribute(h, 7); // White as default
 					std::cout << "\n";
 
+					AdjacencyMatrix am;
+					am.GenerateNeighbours(File.level_array);
+
 					GraphTraversal gt;
 
 					// Depth-First Search
@@ -116,7 +119,6 @@ int main()
 					// Display adjacency matrix
 					if (action == 1)
 					{
-						AdjacencyMatrix am;
 						am.PrintAdjacencyMatrix();
 					}
 				}
