@@ -98,13 +98,13 @@ int main()
 					// Depth-First Search
 					if (action == 1)
 					{
-						gt.DepthFirst();
+						gt.DepthFirst(&am);
 					}
 
 					// Breadth-First Search
 					else if (action == 2)
 					{
-						gt.BreadthFirst();
+						gt.BreadthFirst(&am);
 					}
 
 					// AdjacencyMatrix
@@ -129,7 +129,7 @@ int main()
 					AStar a_star;
 					
 					// Only print result to file if valid
-					if (a_star.Calculate())
+					if (a_star.Calculate(File.level_array))
 					{
 						SetConsoleTextAttribute(h, 9); // Bright blue for input
 						std::cout << "Do you want to save result to file? no (0) yes (1): ";

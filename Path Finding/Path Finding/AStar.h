@@ -9,13 +9,15 @@ File name   :   Astar.h
 #include <vector>
 #include "Queue.h"
 #include <iostream>
+#include "FileInterface.h"
 
 class AStar
 {
 public:
 	char level_path[20][20];
 
-	bool Calculate();
+	std::vector<Item> GetNeighbours(Item* a);
+	bool Calculate(char _level_array[20][20]);
 
 	// Both are continuous methods
 	float ManHattanDistance(Item* a, Item* b);

@@ -120,6 +120,8 @@ void AdjacencyMatrix::PrintAdjacencyMatrix()
 
 			else { std::cout << ' ' << "|"; }
 		}
-		std::cout << "\n\n";
+		std::cout << "\n";
 	}
+
+	std::cout << "\n";
 }

@@ -139,6 +139,7 @@ bool FileInterface::LoadGraph()
 	}
 
 	// Passed all checks
+	std::cout << "valid file\n";
 	return true;
 }
 

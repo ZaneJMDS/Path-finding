@@ -7,13 +7,15 @@ void GraphTraversal::DepthFirst(AdjacencyMatrix* G, char v)
 	// Set visit to true for current
 	visited.push_back(v);
 
+	// std::cout << "Size of " << v << "'s neighbours: " << G->GetNeighbours(v).size() << "\n";
+
 	// For w in G neighbours
-	for (int i = 0; G->GetNeighbours(v).size(); i++)
+	for (int i = 0; i < G->GetNeighbours(v).size(); i++)
 	{
 		char w = G->GetNeighbours(v)[i];
 
 		// Hasn't been visited
-		if (std::find(visited.begin(), visited.end(), w) == visited.end());
+		if (std::find(visited.begin(), visited.end(), w) == visited.end())
 		{
 			DepthFirst(G, w);
 		}
@@ -54,25 +56,21 @@ void GraphTraversal::BreadthFirst(AdjacencyMatrix* G, char v)
 }
 
 // Call recursive
-void GraphTraversal::DepthFirst()
+void GraphTraversal::DepthFirst(AdjacencyMatrix* _graph)
 {
-	AdjacencyMatrix graph;
 	visited.clear();
 
-	DepthFirst(&graph, graph.GetNodeList()[0]);
+	DepthFirst(_graph, _graph->GetNodeList()[0]);
 
 	PrintVisited();
 }
 
 // Call itterative
-void GraphTraversal::BreadthFirst()
+void GraphTraversal::BreadthFirst(AdjacencyMatrix* _graph)
 {
-	AdjacencyMatrix graph;
 	visited.clear();
 
-	std::cout << graph.GetNodeList()[0];
-
-	BreadthFirst(&graph, graph.GetNodeList()[0]);
+	BreadthFirst(_graph, _graph->GetNodeList()[0]);
 
 	PrintVisited();
 }

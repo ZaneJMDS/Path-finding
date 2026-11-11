@@ -18,8 +18,8 @@ public:
 	void DepthFirst(AdjacencyMatrix* G, char v);
 	void BreadthFirst(AdjacencyMatrix* G, char v);
 
-	void DepthFirst();
-	void BreadthFirst();
+	void DepthFirst(AdjacencyMatrix* _graph);
+	void BreadthFirst(AdjacencyMatrix* _graph);
 
 	void PrintVisited();
 

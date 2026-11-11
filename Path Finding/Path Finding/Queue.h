@@ -23,7 +23,6 @@ public:
 	int GetLength() { return heap.size(); }
 
 	Item FindNode(float x, float y);
-	std::vector<Item> GetNeighbourNodes(Item _Item);
 
 protected:
 	std::vector<Item> heap;

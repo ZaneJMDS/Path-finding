@@ -61,7 +61,6 @@ bool Queue::Find(Item _Item)
 }
 
 // Like find, but returns the found item
-// TODO Might not be needed
 Item Queue::GetItem(Item _Item)
 {
     std::vector<Item>::iterator it = std::find(heap.begin(), heap.end(), _Item);
@@ -81,46 +80,4 @@ Item Queue::FindNode(float x, float y)
     }
 
     return current;
-}
-
-// Return the surrounding nodes of this item
-std::vector<Item> Queue::GetNeighbourNodes(Item _Item)
-{
-    std::vector<Item> neighbours;
-
-    // Eight neighbours
-    // Collumns
-    for (int i = -1; i < 2; i++)
-    {
-        // Rows
-        for (int j = -1; j < 2; j++)
-        {
-            // Don't return the current node
-            if (i != 0 && j != 0)
-            {
-                neighbours.push_back(FindNode(_Item.x + i, _Item.y + j));
-            }
-        }
-    }
-
-    bool near_wall = false;
-
-    for (int i = 0; i < neighbours.size(); i++)
-    {
-        neighbours[i].GetIdentifier() == 'x'; // Wall
-        near_wall = true;
-    }
-
-    // If neighbours contain a wall, only return the 4 cardinal directions
-    if (near_wall)
-    {
-        neighbours.clear();
-
-        neighbours.push_back(FindNode(_Item.x + 1, _Item.y));
-        neighbours.push_back(FindNode(_Item.x - 1, _Item.y));
-        neighbours.push_back(FindNode(_Item.x, _Item.y + 1));
-        neighbours.push_back(FindNode(_Item.x, _Item.y - 1));
-    }
-
-    return neighbours;
 }
