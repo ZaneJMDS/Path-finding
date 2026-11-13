@@ -41,7 +41,7 @@ void AdjacencyMatrix::GenerateNeighbours(char _level_array[20][20])
 	std::queue<int> nodeX;
 	std::queue<int> nodeY;
 
-	std::vector<char> node_list = GetNodeList(); // Have to do this here
+	std::vector<char> node_list = GetNodeList();
 
 	for (int y = 0; y < 20; y++)
 	{

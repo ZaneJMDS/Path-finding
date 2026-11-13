@@ -1,6 +1,5 @@
 /***********************************************************************
 Author      :	Zane Sebastian Jackson
-Mail        :   Zane.Jackson@mds.ac.nz
 Description :	Graph that Adjacency Matrix uses
 File name   :   Graph.h
 **************************************************************************/

@@ -1,6 +1,6 @@
 /***********************************************************************
 Author      :	Mike Watts
-Description :	Priority queue / min heap for sorting purposes
+Description :	Priority queue (min heap) for open list in A*
 File name   :   Queue.h
 **************************************************************************/
 

@@ -1,7 +1,6 @@
 /***********************************************************************
 Author      :	Zane Sebastian Jackson
-Mail        :   Zane.Jackson@mds.ac.nz
-Description :	Path Finding and graph traversal algorithim
+Description :	Path Finding and graph traversal application
 File name   :   Main.cpp
 **************************************************************************/
 
@@ -19,6 +18,7 @@ static void ClearText()
 static int NumCheck(int _num)
 {
 	std::cin.ignore(100000, '\n'); // Clears floating points
+
 	// Don't accept a number less than or equal to 0
 	while (std::cin.fail() || _num < 0)
 	{
@@ -41,12 +41,12 @@ int main()
 	FileInterface File; // get the map
 
 	// Menu
-	while (action != 10)
+	while (action != 4)
 	{
 		SetConsoleTextAttribute(h, 7); // White as default
 		std::cout << "PATH FINDING\n\n";
 		std::cout << "Load Graph (1)\n";
-		std::cout << "Quit (10)\n";
+		std::cout << "Quit (4)\n";
 
 		SetConsoleTextAttribute(h, 9); // Bright blue for input
 		std::cout << "Please enter an action: ";

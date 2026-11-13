@@ -1,6 +1,5 @@
 /***********************************************************************
 Author      :	Zane Sebastian Jackson
-Mail        :   Zane.Jackson@mds.ac.nz
 Description :	Path finding with A* algorithim
 File name   :   Astar.h
 **************************************************************************/

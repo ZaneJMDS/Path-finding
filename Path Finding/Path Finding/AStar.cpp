@@ -1,6 +1,6 @@
 #include "AStar.h"
 
-// Return the surrounding nodes of this item
+// Return the surrounding neighbour nodes of this item
 std::vector<Item> AStar::GetNeighbours(Item* a)
 {
 	std::vector<Item> neighbours;
@@ -123,8 +123,6 @@ bool AStar::Calculate(char _level_array[20][20])
 		}
 	}
 
-	std::cout << PrintLevelPath();
-
 	// Create 2 containers open and closed
 	Queue open;
 	std::vector<Item> closed;
@@ -140,73 +138,67 @@ bool AStar::Calculate(char _level_array[20][20])
 		current = closed.back(); // This becomes the current node
 		std::vector<Item> neighbours = GetNeighbours(&current); // Get neighbours of the current node
 
-		// std::cout << "Neighbour size: " << neighbours.size();
-
 		// For each neighbor n
 		for (int i = 0; i < neighbours.size(); i++)
 		{
-			// If not an obstacle or on the closed list
+			// If n is not an obstacle or on the closed list
 			if (neighbours[i].GetIdentifier() != 'w' && std::find(closed.begin(), closed.end(), neighbours[i]) == closed.end())
 			{
 				// P = Parent Node of the neighbour is the current
-				neighbours[i].p = &current;
+				// neighbours[i].p = &current;
 				
 				// H: Estimated cost to get from the node n to the goal
 				neighbours[i].h = ManHattanDistance(&neighbours[i], &End);
 
 				// G: Cost to reach the node n from the current + the g value of p
-				neighbours[i].g = EuclidianDistance(&current, &neighbours[i]) + neighbours[i].p->g;
+				neighbours[i].g = EuclidianDistance(&current, &neighbours[i]); // + neighbours[i].p->g;
 
 				// F: Estimated total cost of path through n to the goal
 				neighbours[i].f = neighbours[i].h + neighbours[i].g;
 
-				// N is on the open list and NeighbourList[i].g < Open.g
-				if (open.Find(neighbours[i]) && neighbours[i].g < open.GetItem(neighbours[i])->g)
+				// N is on the open list and N.g < Open.g ()
+				if (open.Find(neighbours[i])) // && neighbours[i].g < open.GetItem(neighbours[i])->g)
 				{
 					// Update n.f, n.g, n.p
-					neighbours[i].p = open.GetItem(neighbours[i]);
-					neighbours[i].g = EuclidianDistance(&current, &neighbours[i]) + neighbours[i].p->g;
+					// neighbours[i].p = open.GetItem(neighbours[i]);
+					neighbours[i].g = EuclidianDistance(&current, &neighbours[i]); // + neighbours[i].p->g;
 					neighbours[i].f = neighbours[i].h + neighbours[i].g;
 				}
 
 				// Push N to the Open list
 				else
 				{
-					// std::cout << "Pushing n to the open list\n";
 					open.Push(neighbours[i]);
 				}
 			}
 		}
 	}
 
-	std::cout << "Closed size: " << closed.size() << "\n";
-	std::cout << "Open size: " << open.GetLength() << "\n";
-
 	// Need to see if closed contains the exit node
 	// Valid path
 	if (!closed.empty() && closed.back().GetIdentifier() == 'x')
 	{
-		std::cout << "Valid pathway found\n"; 
+		std::cout << "Valid pathway found:\n\n"; 
 
 		// Every item on the closed list is one that the algorithim has visited
-		/*for (int i = 2; i < closed.size() - 1; i++)
+		for (int i = 2; i < closed.size() - 1; i++)
 		{
 			level_path[closed[i].x][closed[i].y] = 'p';
-		}*/
+		}
 
-		// Walk back through the parents
-		Item* back_current = &closed.back();
+		std::cout << PrintLevelPath();
 
-		while (back_current->p != nullptr)
+		// Walk back through the parents to get the most efficient path
+/*		Item* back_current = &closed.back();
+
+		while (back_current->p->GetIdentifier() != 's')
 		{
 			level_path[back_current->x][back_current->y] = 'p';
 			back_current = back_current->p;
 		}
 
-		std::cout << "Test";
-
 		// Print out for the user here
-		std::cout << PrintLevelPath();
+		std::cout << PrintLevelPath();*/
 
 		return true;
 	}
@@ -233,6 +225,7 @@ float AStar::EuclidianDistance(Item* a, Item* b)
 	return sqrt(pow((a->x - b->x), 2) + pow((a->y - b->y), 2));
 }
 
+// Print the path that A* has taken
 std::string AStar::PrintLevelPath()
 {
 	std::string graph = "";
@@ -247,5 +240,8 @@ std::string AStar::PrintLevelPath()
 		}
 		graph += "\n";
 	}
+
+	graph += "\n";
+
 	return graph;
 }

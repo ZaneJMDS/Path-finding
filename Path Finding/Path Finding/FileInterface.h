@@ -1,6 +1,5 @@
 /***********************************************************************
 Author      :	Zane Sebastian Jackson
-Mail        :   Zane.Jackson@mds.ac.nz
 Description :	Load a level with obstacles and items
 File name   :   FileInterface.h
 **************************************************************************/

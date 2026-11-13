@@ -7,8 +7,6 @@ void GraphTraversal::DepthFirst(AdjacencyMatrix* G, char v)
 	// Set visit to true for current
 	visited.push_back(v);
 
-	// std::cout << "Size of " << v << "'s neighbours: " << G->GetNeighbours(v).size() << "\n";
-
 	// For w in G neighbours
 	for (int i = 0; i < G->GetNeighbours(v).size(); i++)
 	{

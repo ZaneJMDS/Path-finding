@@ -1,5 +1,5 @@
 /***********************************************************************
-Author      :	Mike Watts
+Author      :	Zane Jackson
 Description :	Used in heap sort (Modified to fit A*)
 File name   :   Item.h
 **************************************************************************/
