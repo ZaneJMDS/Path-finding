@@ -13,18 +13,17 @@ Features:
 
 Extensions:
 
-1. The program may count how many nodes it has visited and display that to the user for path finding.
-2. The program should allow the user to place and remove items from within the application.
-3. The program may add more obstacles for path finding. (this could include locked doors and keys)
+1. The program should count how many nodes it has visited and display that to the user for path finding.
+2. The program shall allow the user to move items around from within the application.
+3. The program may add different obstacles for path finding. (this could include locked doors and keys)
 
-4\. The program Colors for items on the grid.
+4\. The program may Colors for items on the grid.
 
 
 
 Bugs / problems:
 
-* A star dosn't use parents to find a more efficient path
-* Adjacency matrix dosn't always get the closest neighbours
+* A star dosn't use parents to find a more efficient path, leading to large paths
 
 
 

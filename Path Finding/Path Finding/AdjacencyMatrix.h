@@ -15,10 +15,13 @@ class AdjacencyMatrix : public Graph
 {
 public:
 	virtual void Connect(char a, char b, int ax, int bx, int ay, int by);
+	virtual void Connect(char a, char b, float _weighting);
+
 	virtual bool AreConnected(char a, char b);
 	virtual void GenerateNeighbours(char _level_array[20][20]);
 	virtual std::vector<char> GetNeighbours(char a);
 	virtual void PrintAdjacencyMatrix();
+	virtual float GetWeightings(int ax, int bx, int ay, int by);
 
 protected:
 	float adjacencies[11][11]; // The adjacency matrix with weightings

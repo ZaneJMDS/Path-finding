@@ -11,11 +11,24 @@ void AdjacencyMatrix::Connect(char a, char b, int ax, int bx, int ay, int by)
 	int indexA = node_indices[a];
 	int indexB = node_indices[b];
 
-	// Pythagorous therom
-	float weightings = sqrt(pow(abs(ax - bx), 2) + pow(abs(ay - by), 2));
+	float weightings = GetWeightings(ax, bx, ay, by);
 
 	adjacencies[indexA][indexB] = weightings; 
 	adjacencies[indexB][indexA] = weightings;
+}
+
+void AdjacencyMatrix::Connect(char a, char b, float _weighting)
+{
+	if (!NodeExist(a) || !NodeExist(b))
+	{
+		throw "Node dosn't exist";
+	}
+
+	int indexA = node_indices[a];
+	int indexB = node_indices[b];
+
+	adjacencies[indexA][indexB] = _weighting;
+	adjacencies[indexB][indexA] = _weighting;
 }
 
 // Check if 2 items are connected in the adjacency list
@@ -35,14 +48,13 @@ bool AdjacencyMatrix::AreConnected(char a, char b)
 // Generate the neighbours according to how close they are in the level
 void AdjacencyMatrix::GenerateNeighbours(char _level_array[20][20])
 {
-	Graph graph;
-	
-	std::queue<char> to_connect;
-	std::queue<int> nodeX;
-	std::queue<int> nodeY;
-
 	std::vector<char> node_list = GetNodeList();
 
+	std::vector<char> to_connect;
+	std::vector<char> nodeX;
+	std::vector<char> nodeY;
+
+	// Search through map for items
 	for (int y = 0; y < 20; y++)
 	{
 		for (int x = 0; x < 20; x++)
@@ -50,25 +62,56 @@ void AdjacencyMatrix::GenerateNeighbours(char _level_array[20][20])
 			// Found an item
 			if (std::find(node_list.begin(), node_list.end(), _level_array[x][y]) != node_list.end())
 			{
-				to_connect.push(_level_array[x][y]);
-				nodeX.push(x);
-				nodeY.push(y);
-			}
-
-			// Found 2 items
-			if (to_connect.size() == 2)
-			{
-				char front_node = to_connect.front();
-				int frontX = nodeX.front();
-				int frontY = nodeY.front();
-
-				to_connect.pop();
-				nodeX.pop();
-				nodeY.pop();
-
-				Connect(front_node, to_connect.front(), frontX, nodeX.front(), frontY, nodeY.front());
+				to_connect.push_back(_level_array[x][y]);
+				nodeX.push_back(x);
+				nodeY.push_back(y);
 			}
 		}
+	}
+
+	std::vector<float> temp_weightings;
+
+	// Search for connections
+	for (int i = 0; i < to_connect.size(); i++)
+	{
+		temp_weightings.clear();
+
+		for (int j = 0; j < to_connect.size(); j++)
+		{
+			if (i != j)
+			{
+				temp_weightings.push_back(GetWeightings(nodeX[i], nodeX[j], nodeY[i], nodeY[j]));
+			}
+
+			else
+			{
+				temp_weightings.push_back(1000);
+			}
+		}
+
+		// Create connections
+		float weighting1 = 1000;
+		float weighting2 = 1000;
+		char connectA = ' ';
+		char connectB = ' ';
+
+		for (int j = 0; j < temp_weightings.size(); j++)
+		{
+			if (temp_weightings[j] < weighting1)
+			{
+				weighting1 = temp_weightings[j];
+				connectA = to_connect[j];
+			}
+
+			if (temp_weightings[j] < weighting2 && temp_weightings[j] != weighting1)
+			{
+				weighting2 = temp_weightings[j];
+				connectB = to_connect[j];
+			}
+		}
+
+		Connect(to_connect[i], connectA, weighting1);
+		Connect(to_connect[i], connectB, weighting2);
 	}
 }
 
@@ -124,4 +167,10 @@ void AdjacencyMatrix::PrintAdjacencyMatrix()
 	}
 
 	std::cout << "\n";
+}
+
+// Get the distance between the nodes
+float AdjacencyMatrix::GetWeightings(int ax, int bx, int ay, int by)
+{
+	return sqrt(pow(abs(ax - bx), 2) + pow(abs(ay - by), 2));
 }

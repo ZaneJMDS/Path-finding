@@ -51,10 +51,9 @@ int main()
 		SetConsoleTextAttribute(h, 9); // Bright blue for input
 		std::cout << "Please enter an action: ";
 		std::cin >> action;
-		NumCheck(action);
+		action = NumCheck(action);
 
 		SetConsoleTextAttribute(h, 7); // White as default
-		std::cout << "\n";
 
 		// Load graph
 		if (action == 1)
@@ -62,6 +61,7 @@ int main()
 			if (File.LoadGraph())
 			{
 				// Display the graph to the user
+				std::cout << "\n";
 				std::cout << File.PrintGraph();
 				std::cout << "\n\n";
 
@@ -72,7 +72,7 @@ int main()
 				SetConsoleTextAttribute(h, 9); // Bright blue for input
 				std::cout << "Please enter an action: ";
 				std::cin >> action;
-				NumCheck(action);
+				action = NumCheck(action);
 
 				SetConsoleTextAttribute(h, 7); // White as default
 				std::cout << "\n";
@@ -85,7 +85,7 @@ int main()
 					SetConsoleTextAttribute(h, 9); // Bright blue for input
 					std::cout << "Traversal algorithim: ";
 					std::cin >> action;
-					NumCheck(action);
+					action = NumCheck(action);
 
 					SetConsoleTextAttribute(h, 7); // White as default
 					std::cout << "\n";
@@ -111,7 +111,7 @@ int main()
 					SetConsoleTextAttribute(h, 9); // Bright blue for input
 					std::cout << "Would you like to generate an adjacency matrix? no (0), yes (1): ";
 					std::cin >> action;
-					NumCheck(action);
+					action = NumCheck(action);
 					
 					SetConsoleTextAttribute(h, 7); // White as default
 					std::cout << "\n";
@@ -134,7 +134,7 @@ int main()
 						SetConsoleTextAttribute(h, 9); // Bright blue for input
 						std::cout << "Do you want to save result to file? no (0) yes (1): ";
 						std::cin >> action;
-						NumCheck(action);
+						action = NumCheck(action);
 
 						SetConsoleTextAttribute(h, 7); // White as default
 						std::cout << "\n";
@@ -157,7 +157,7 @@ int main()
 
 		// Refresh text on the screen
 		SetConsoleTextAttribute(h, 9); // Bright blue text for input
-		std::cout << "Click <enter> to return to the menu";
+		std::cout << "Click <enter> to return";
 		std::cin.get();
 		ClearText();
 	}
