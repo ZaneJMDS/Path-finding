@@ -19,10 +19,8 @@ public:
 	Item Pop();
 	float PriorityFront();
 	bool Find(Item _Item);
-	Item GetItem(Item _Item);
+	Item* GetItem(Item _Item);
 	int GetLength() { return heap.size(); }
-
-	Item FindNode(float x, float y);
 
 protected:
 	std::vector<Item> heap;

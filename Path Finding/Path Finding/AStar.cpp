@@ -18,11 +18,11 @@ std::vector<Item> AStar::GetNeighbours(Item* a)
 			// Don't return the current node
 			if (i != 0 && j != 0)
 			{
-				neighbourX = a->x + i;
+				neighbourX = a->x + j;
 				neighbourY = a->y + i;
 
 				// Don't return a node which leaves the level
-				if (neighbourX < 20 && neighbourX > 0 && neighbourY < 20 && neighbourY > 0)
+				if (neighbourX < 20 && neighbourX >= 0 && neighbourY < 20 && neighbourY >= 0)
 				{
 					Item NewItem(level_path[neighbourX][neighbourY], 0, neighbourX, neighbourY);
 					neighbours.push_back(NewItem);
@@ -45,20 +45,44 @@ std::vector<Item> AStar::GetNeighbours(Item* a)
 		neighbours.clear();
 
 		// Right
-		Item ItemA(level_path[a->x + 1][a->y], 0, a->x + 1, a->y);
-		neighbours.push_back(ItemA);
+		neighbourX = a->x + 1;
+		neighbourY = a->y;
+
+		if (neighbourX < 20 && neighbourX >= 0 && neighbourY < 20 && neighbourY >= 0)
+		{
+			Item ItemA(level_path[neighbourX][neighbourY], 0, neighbourX, neighbourY);
+			neighbours.push_back(ItemA);
+		}
 
 		// Left
-		Item ItemB(level_path[a->x - 1][a->y], 0, a->x - 1, a->y);
-		neighbours.push_back(ItemB);
-		
+		neighbourX = a->x - 1;
+		neighbourY = a->y;
+
+		if (neighbourX < 20 && neighbourX >= 0 && neighbourY < 20 && neighbourY >= 0)
+		{
+			Item ItemB(level_path[neighbourX][neighbourY], 0, neighbourX, neighbourY);
+			neighbours.push_back(ItemB);
+		}
+
 		// Up
-		Item ItemC(level_path[a->x][a->y + 1], 0, a->x, a->y + 1);
-		neighbours.push_back(ItemC);
+		neighbourX = a->x;
+		neighbourY = a->y + 1;
+
+		if (neighbourX < 20 && neighbourX >= 0 && neighbourY < 20 && neighbourY >= 0)
+		{
+			Item ItemC(level_path[neighbourX][neighbourY], 0, neighbourX, neighbourY);
+			neighbours.push_back(ItemC);
+		}
 
 		// Down
-		Item ItemD(level_path[a->x][a->y - 1], 0, a->x, a->y - 1);
-		neighbours.push_back(ItemD);
+		neighbourX = a->x;
+		neighbourY = a->y - 1;
+
+		if (neighbourX < 20 && neighbourX >= 0 && neighbourY < 20 && neighbourY >= 0)
+		{
+			Item ItemD(level_path[a->x][a->y - 1], 0, a->x, a->y - 1);
+			neighbours.push_back(ItemD);
+		}
 	}
 
 	return neighbours;
@@ -70,6 +94,9 @@ bool AStar::Calculate(char _level_array[20][20])
 {
 	// Add the START node to the Open list with default f & g values of zero
 	Item Start('s', 0.f);
+	
+	// Find the end node for manhattan distance
+	Item End('e', 0.f);
 
 	// Move the level array to level path to not adjust the original level
 	for (int y = 0; y < 20; y++)
@@ -84,6 +111,14 @@ bool AStar::Calculate(char _level_array[20][20])
 				// Initilize the x and y values
 				Start.x = x;
 				Start.y = y;
+			}
+
+			// Found end node
+			if (level_path[x][y] == 'x')
+			{
+				// Initilize the x and y values
+				End.x = x;
+				End.y = y;
 			}
 		}
 	}
@@ -113,30 +148,25 @@ bool AStar::Calculate(char _level_array[20][20])
 			// If not an obstacle or on the closed list
 			if (neighbours[i].GetIdentifier() != 'w' && std::find(closed.begin(), closed.end(), neighbours[i]) == closed.end())
 			{
+				// P = Parent Node of the neighbour is the current
+				neighbours[i].p = &current;
+				
 				// H: Estimated cost to get from the node n to the goal
-				neighbours[i].h = ManHattanDistance(&current, &neighbours[i]);
+				neighbours[i].h = ManHattanDistance(&neighbours[i], &End);
 
-				// G: Cost to reach the node n
-				neighbours[i].g = EuclidianDistance(&current, &neighbours[i]);
+				// G: Cost to reach the node n from the current + the g value of p
+				neighbours[i].g = EuclidianDistance(&current, &neighbours[i]) + neighbours[i].p->g;
 
 				// F: Estimated total cost of path through n to the goal
 				neighbours[i].f = neighbours[i].h + neighbours[i].g;
 
-				// P = Parent Node of the neighbour is the current
-				neighbours[i].p = &current;
-				
-				// n.g = distance from CURRENT to n + CURRENT.g
-				neighbours[i].g = EuclidianDistance(&current, &neighbours[i]) + neighbours[i].p->g;
-
-				// std::cout << "n.g: " << neighbours[i].g << ", o.g: " << open.GetItem(neighbours[i]).g << "\n";
-
 				// N is on the open list and NeighbourList[i].g < Open.g
-				if (open.Find(neighbours[i]) && neighbours[i].g < neighbours[i].p->g)
+				if (open.Find(neighbours[i]) && neighbours[i].g < open.GetItem(neighbours[i])->g)
 				{
-					// std::cout << "Update n.f, n.g, n.p\n";
-					neighbours[i].g = EuclidianDistance(&current, &neighbours[i]);
+					// Update n.f, n.g, n.p
+					neighbours[i].p = open.GetItem(neighbours[i]);
+					neighbours[i].g = EuclidianDistance(&current, &neighbours[i]) + neighbours[i].p->g;
 					neighbours[i].f = neighbours[i].h + neighbours[i].g;
-					neighbours[i].p = &current;
 				}
 
 				// Push N to the Open list
@@ -167,7 +197,7 @@ bool AStar::Calculate(char _level_array[20][20])
 		// Walk back through the parents
 		Item* back_current = &closed.back();
 
-		while (back_current->GetIdentifier() != 's')
+		while (back_current->p != nullptr)
 		{
 			level_path[back_current->x][back_current->y] = 'p';
 			back_current = back_current->p;

@@ -61,23 +61,10 @@ bool Queue::Find(Item _Item)
 }
 
 // Like find, but returns the found item
-Item Queue::GetItem(Item _Item)
+Item* Queue::GetItem(Item _Item)
 {
     std::vector<Item>::iterator it = std::find(heap.begin(), heap.end(), _Item);
-    std::distance(heap.begin(), it);
-
-    return _Item;
-}
-
-Item Queue::FindNode(float x, float y)
-{
-    Item current = heap[0]; // Start at the beggining
-
-    // Iterate until the node has been found
-    while (current.x != x && current.y != y)
-    {
-        // Implement iterative here
-    }
-
-    return current;
+    std::size_t index = std::distance(std::begin(heap), it);
+    
+    return &heap[index];
 }
