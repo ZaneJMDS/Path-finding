@@ -5,6 +5,9 @@ std::vector<Item> AStar::GetNeighbours(Item* a)
 {
 	std::vector<Item> neighbours;
 
+	int neighbourX;
+	int neighbourY;
+
 	// Eight neighbours
 	// Collumns
 	for (int i = -1; i < 2; i++)
@@ -15,8 +18,15 @@ std::vector<Item> AStar::GetNeighbours(Item* a)
 			// Don't return the current node
 			if (i != 0 && j != 0)
 			{
-				Item NewItem(level_path[a->x +i][a->y + j], 0, a->x + i, a->y + j);
-				neighbours.push_back(NewItem);
+				neighbourX = a->x + i;
+				neighbourY = a->y + i;
+
+				// Don't return a node which leaves the level
+				if (neighbourX < 20 && neighbourX > 0 && neighbourY < 20 && neighbourY > 0)
+				{
+					Item NewItem(level_path[neighbourX][neighbourY], 0, neighbourX, neighbourY);
+					neighbours.push_back(NewItem);
+				}
 			}
 		}
 	}
@@ -83,20 +93,19 @@ bool AStar::Calculate(char _level_array[20][20])
 	// Create 2 containers open and closed
 	Queue open;
 	std::vector<Item> closed;
+	Item current('n', 0); // Set the first node to null
+	closed.push_back(current);
 
 	open.Push(Start);
-	
-	closed.push_back(open.Pop()); // Remove the node at the head of the open list and add to the back of the closed list
-	Item current = closed.back(); // This becomes the current node
 
 	// While there are still items in the open list, and the exit node hasn't been found
 	while (open.GetLength() != 0 && current.GetIdentifier() != 'x')
 	{
 		closed.push_back(open.Pop()); // Remove the node at the head of the open list and add to the back of the closed list
-		current = closed.back();
+		current = closed.back(); // This becomes the current node
 		std::vector<Item> neighbours = GetNeighbours(&current); // Get neighbours of the current node
 
-		std::cout << "Neighbour size: " << neighbours.size();
+		// std::cout << "Neighbour size: " << neighbours.size();
 
 		// For each neighbor n
 		for (int i = 0; i < neighbours.size(); i++)
@@ -113,26 +122,27 @@ bool AStar::Calculate(char _level_array[20][20])
 				// F: Estimated total cost of path through n to the goal
 				neighbours[i].f = neighbours[i].h + neighbours[i].g;
 
-				// P = CURRENT Node
-				// neighbours[i].p = &current;
+				// P = Parent Node of the neighbour is the current
+				neighbours[i].p = &current;
 				
 				// n.g = distance from CURRENT to n + CURRENT.g
-				// neighbours[i].g = EuclidianDistance(&current, &neighbours[i]) + neighbours[i].p->g;
+				neighbours[i].g = EuclidianDistance(&current, &neighbours[i]) + neighbours[i].p->g;
 
 				// std::cout << "n.g: " << neighbours[i].g << ", o.g: " << open.GetItem(neighbours[i]).g << "\n";
 
 				// N is on the open list and NeighbourList[i].g < Open.g
-				if (open.Find(neighbours[i])) // && current.neighbour_list[i].g < open.GetItem(current.neighbour_list[i]).g)
+				if (open.Find(neighbours[i]) && neighbours[i].g < neighbours[i].p->g)
 				{
-					std::cout << "Update n.f, n.g, n.p\n";
+					// std::cout << "Update n.f, n.g, n.p\n";
 					neighbours[i].g = EuclidianDistance(&current, &neighbours[i]);
 					neighbours[i].f = neighbours[i].h + neighbours[i].g;
+					neighbours[i].p = &current;
 				}
 
 				// Push N to the Open list
 				else
 				{
-					std::cout << "Pushing n to the open list\n";
+					// std::cout << "Pushing n to the open list\n";
 					open.Push(neighbours[i]);
 				}
 			}
@@ -140,19 +150,30 @@ bool AStar::Calculate(char _level_array[20][20])
 	}
 
 	std::cout << "Closed size: " << closed.size() << "\n";
-	
-	// Need to see if closed contains the end node
+	std::cout << "Open size: " << open.GetLength() << "\n";
+
+	// Need to see if closed contains the exit node
 	// Valid path
-	if (current.GetIdentifier() == 'x')
+	if (!closed.empty() && closed.back().GetIdentifier() == 'x')
 	{
 		std::cout << "Valid pathway found\n"; 
 
 		// Every item on the closed list is one that the algorithim has visited
-		// Set that as the pathway
-		for (int i = 0; i < closed.size(); i++)
+		/*for (int i = 2; i < closed.size() - 1; i++)
 		{
 			level_path[closed[i].x][closed[i].y] = 'p';
+		}*/
+
+		// Walk back through the parents
+		Item* back_current = &closed.back();
+
+		while (back_current->GetIdentifier() != 's')
+		{
+			level_path[back_current->x][back_current->y] = 'p';
+			back_current = back_current->p;
 		}
+
+		std::cout << "Test";
 
 		// Print out for the user here
 		std::cout << PrintLevelPath();
